@@ -1,19 +1,29 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import configureStore from './redux/store';
+import HourTracker from './containers/HourTracker/HourTracker';
+import TotalHours from './containers/TotalHours/TotalHours';
+
 import './App.css';
 
-class App extends Component {
+const store = configureStore({});
+
+class App extends React.Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Provider store={store}>
+        <Router>
+          <div className="app">
+            <ul className="navigation">
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/total-hours">Total Hours</Link></li>
+            </ul>
+            <Route exact path="/" component={HourTracker} />
+            <Route path="/total-hours" component={TotalHours} />
+          </div>
+        </Router>
+      </Provider>
     );
   }
 }
